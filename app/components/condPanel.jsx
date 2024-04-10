@@ -6,11 +6,11 @@ import { MdVisibility, MdWaterDrop, MdOutlineWindPower } from "react-icons/md";
 import { ImMeter } from "react-icons/im";
 import { FiSunrise } from "react-icons/fi";
 import { FiSunset } from "react-icons/fi";
+import intoTemp from "../lib/_utils";
 
-
-const CondPanel = () => {
+const CondPanel = (props) => {
     return (
-        <div className=" flex  gap-5">
+        <div className=" flex gap-5">
             <CurrCard />
             <div className="flex justify-between bg-[#87CEEB] text-black rounded-md shadow-lg flex-auto px-5">
                 <CondCard cond={"Visibility"} val={"20km"} src={MdVisibility}  />

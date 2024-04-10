@@ -1,13 +1,13 @@
 import Image from "next/image"
 
-const Card = () => {
+const Card = (props) => {
     return(
-        <div className=" mx-10 flex flex-col items-center  text-[var(--textSoft)]">
+        <div className=" mx-30 flex flex-col items-center  text-[var(--textSoft)]">
             <p>
-                11:00AM
+                {props.time}
             </p>
-            <Image src="https://openweathermap.org/img/wn/10d@2x.png" alt="weather icon" width={100} height={100} />
-            <p>24&deg;</p>
+            <Image src="https://openweathermap.org/img/wn/10d@2x.png" alt="weather icon" width={150} height={150} />
+            <p>{props.temp}&deg;</p>
         </div>
     )
 }
