@@ -2,6 +2,8 @@
 import { MdGpsFixed, MdLocationPin, MdSearch  } from "react-icons/md";
 import { useSearchContext } from "./searchContext";
 import { useEffect, useState } from "react";
+import { getWeatherByCity } from "../lib/getWeatherByCity";
+import getCityName from "../lib/getCityName";
 
 const Search = () => {
     const { city, setCity, setLat, setLon} = useSearchContext();
@@ -23,7 +25,7 @@ const Search = () => {
         setInputCity(e.target.value);
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
         setCity(inputCity);
     }
 
@@ -32,7 +34,7 @@ const Search = () => {
             <MdGpsFixed className=" active:text-[#87CEEB] cursor-pointer" onClick={getLocation} />
             <div className="flex items-center">
                 <MdLocationPin />
-                <p className="text-[var(--textSoft)]" >{city || "City"}</p>
+                <p className="text-[var(--textSoft)]" >{city ? city : null}</p>
             </div>
             <form action={handleSubmit}>
                 <input type="text" onChange={handleChange} placeholder="City name" name="City" className=" bg-[#2e374a] p-1 border-none focus: outline-none rounded-[0.5rem]" />

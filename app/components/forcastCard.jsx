@@ -6,29 +6,31 @@ import { MdVisibility, MdWaterDrop, MdOutlineWindPower } from "react-icons/md";
 import { ImMeter } from "react-icons/im";
 import { FiSunrise } from "react-icons/fi";
 import { FiSunset } from "react-icons/fi";
+import { intoDate, intoTime, intoTemp } from "../lib/_utils";
 
 
 const ForcastCard = (props) => {
+    const iconURL = `https://openweathermap.org/img/wn/${props.day.weather[0].icon}.png`
+    
     return (
         <div className=" flex w-full  gap-5 items-center  bg-[var(--bg-soft)] rounded-lg shadow-lg">
             <div className=" flex flex-col items-center">
-                <Image src="https://openweathermap.org/img/wn/10d@2x.png" alt="weather icon" width={90} height={90} />
+                <Image src={iconURL} alt="weather icon" width={90} height={90} />
                 <span>
-                    date
+                    {intoDate(props.day.dt)}
                 </span>
             </div>
             <div className="flex flex-col flex-1 items-center justify-center">
-                <h1 className="text-5xl">20&deg;</h1>
-                <span className=" text-[12px] font-light"> Feels like 15&deg; </span>
-                <p>Cloudy</p>
+                <h1 className="text-5xl">{intoTemp(props.day.temp.day)}&deg;</h1>
+                <span className=" text-[12px] font-light"> Feels like {intoTemp(props.day.feels_like.day)}&deg; </span>
+                <p>{props.day.weather[0].main}</p>
             </div>
             <div className="flex justify-between h-40 w-full text-[var(--textSoft)]">
-                <CondCard cond={"Visibility"} val={"20km"} src={MdVisibility}  />
-                <CondCard cond={"Humidity"} val={"35%"} src={MdWaterDrop}/>
-                <CondCard cond={"Wind speed"} val={"11km/h"} src={MdOutlineWindPower}/>
-                <CondCard cond={"Air Pressure"} val={"1007 pha"} src={ImMeter} />
-                <CondCard cond={"Sunrise"} val={"12:30"} src={FiSunrise} />
-                <CondCard cond={"Sunset"} val={"12:43"} src={FiSunset}/>
+                <CondCard cond={"Humidity"} val={props.day.humidity + "%"} src={MdWaterDrop}/>
+                <CondCard cond={"Wind speed"} val={intoTemp(props.day.wind_speed) + "KM/H"} src={MdOutlineWindPower}/>
+                <CondCard cond={"Air Pressure"} val={props.day.pressure + " pha"} src={ImMeter} />
+                <CondCard cond={"Sunrise"} val={intoTime(props.day.sunrise)} src={FiSunrise} />
+                <CondCard cond={"Sunset"} val={intoTime(props.day.sunset)} src={FiSunset}/>
             </div>
         </div>
     );

@@ -8,7 +8,7 @@ import { useState } from "react";
 import {getHourly} from "../lib/getHourly";
 const CurrTempPanel = ( { weather }) => {
     console.log(weather);
-    const [hourly, setHourly] = useState(getHourly(weather.hourly));
+    const hourly = getHourly(weather.hourly);
     
     console.log(hourly);
     return (
@@ -20,7 +20,7 @@ const CurrTempPanel = ( { weather }) => {
             </div>
             <div className=" flex overflow-x-auto justify-around">
                 { hourly.map(( hour, index ) => {
-                    return ( <Card key={index} time={intoTime(hour.dt)} temp={intoTemp(hour.temp)}/> )
+                    return ( <Card key={index} time={intoTime(hour.dt)} temp={intoTemp(hour.temp)} icon={hour.weather[0].icon}/> )
                 }) }
             </div>
         </div>

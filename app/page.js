@@ -15,7 +15,7 @@ export default function Home() {
 
 
   console.log("starting")
-  const { city, lat, lon, setLat, setLon } = useSearchContext();
+  const { city, setCity, lat, lon, setLat, setLon } = useSearchContext();
 
   const [weather, setWeather] = useState( null );
 
@@ -24,24 +24,34 @@ export default function Home() {
     if (lat != null && lon != null){
       const obj = await getWeather(lat, lon);
       setWeather(obj);
+      setCity(null);
     }
   }
 
   useEffect(() => {
+    if (city != null){
+      const fetchCity = async () => {
+        const obj = await getWeatherByCity(city);
+        setWeather(obj);
+      }
+      fetchCity();
+    }
+  },[city]);
+
+  useEffect(() => {
     fetchWeather();
   },[lat, lon]);
-  console.log(weather);
+
   return (
       weather ?     
       <div className=" flex flex-col gap-2 p-2 min-h-screen bg-[var(--bg)] overflow-x-clip">
         <Tag day={"Today"} />
-        <CurrTempPanel weather={ weather}/>
-        <CondPanel conditions = { weather }/>
+        <CurrTempPanel weather={ weather }/>
+        <CondPanel condition={ weather }/>
         <Tag day={"Forcast"}/>
-        <ForcastCard />
-        <ForcastCard />
-        <ForcastCard />
-        <ForcastCard />
+        { weather.daily.slice(1).map(( day, index ) => {
+          return ( <ForcastCard key={index} day={day}/>)
+        })}
     </div>
     : 
     <div className=" flex flex-col gap-2 p-2 min-h-screen bg-[var(--bg)] overflow-x-clip">
