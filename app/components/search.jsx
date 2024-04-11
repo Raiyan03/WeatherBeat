@@ -11,13 +11,10 @@ const Search = () => {
     const getLocation = async () => {
         navigator.geolocation.getCurrentPosition((position)=> {
 
-            setLat(position.coords.latitude);
-            setLon(position.coords.longitude);
-
+            setLat(l => position.coords.latitude);
+            setLon(l => position.coords.longitude);
         }, (error) => {
-
             console.log(error);
-
         });
     }
 
